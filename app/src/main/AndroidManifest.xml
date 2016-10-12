@@ -18,7 +18,7 @@
 
         <receiver
             android:name="com.google.android.gms.analytics.CampaignTrackingReceiver"
-            android:enabled="true"
+            android:enabled="false"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
@@ -27,7 +27,7 @@
 
         <service
             android:name="com.google.android.gms.analytics.CampaignTrackingService"
-            android:enabled="true"
+            android:enabled="false"
             android:exported="false" />
 
         <activity

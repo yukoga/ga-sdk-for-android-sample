@@ -7,9 +7,13 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.google.android.gms.analytics.CampaignTrackingReceiver;
+//import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+//import com.google.android.gms.analytics.CampaignTrackingService;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
+//import java.net.URLDecoder;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -18,6 +22,8 @@ import static java.net.URLDecoder.*;
 public class ReferrerReceiver extends BroadcastReceiver {
     public ReferrerReceiver() {
     }
+
+    private Tracker mTracker;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -33,6 +39,18 @@ public class ReferrerReceiver extends BroadcastReceiver {
             Log.e("Error on referrer:", e.getMessage());
         } finally {
             Log.i("REFERRER", "Finish capture install referrer.");
+            CampaignTrackingReceiver receiver = new CampaignTrackingReceiver();
+            receiver.onReceive(context, intent);
+
+            AnalyticsApplication application = (AnalyticsApplication) context.getApplicationContext();
+            mTracker = application.getDefaultTracker();
+            mTracker.send(new HitBuilders.EventBuilder()
+                .setCampaignParamsFromUrl(referrer)
+                .setCategory("Campaign Measurement")
+                .setAction("measure source and medium")
+                .setLabel("test")
+                .build()
+            );
         }
     }
 

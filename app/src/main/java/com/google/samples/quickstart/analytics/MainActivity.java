@@ -17,6 +17,7 @@
 package com.google.samples.quickstart.analytics;
 
 import java.util.Locale;
+import java.util.logging.Logger;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
@@ -138,13 +139,15 @@ public class MainActivity extends AppCompatActivity {
    * inside {@link FragmentPagerAdapter}.
    */
   private void sendScreenImageName() {
-    String name = getCurrentImageTitle();
+      String name = getCurrentImageTitle();
 
-    // [START screen_view_hit]
-    Log.i(TAG, "Setting screen name: " + name);
-    mTracker.setScreenName("Image~" + name);
-    mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-    // [END screen_view_hit]
+      // [START screen_view_hit]
+      // Log.i(TAG, "Setting screen name: " + name);
+      mTracker.setScreenName("Image~" + name);
+      Log.i("Client ID : ", mTracker.get("&cid"));
+
+      mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+      // [END screen_view_hit]
   }
 
   /**
